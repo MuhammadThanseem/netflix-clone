@@ -1,10 +1,12 @@
 <template>
-  <navbar/>
+  <Navbar/>
+  <Banner/>
 </template>
 <script>
-import navbar from './components/Navbar/navbar.vue'
+import Banner from './components/Banner/banner.vue'
+import Navbar from './components/Navbar/navbar.vue'
 export default {
-  components: { navbar },
+  components: { Navbar, Banner },
   
 }
 </script>
