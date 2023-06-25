@@ -1,15 +1,16 @@
 <template>
-  <div className="banner">
+  <div
+    className="banner"
+    :style="{ backgroundImage: 'url(' + backgroundImage + ')' }"
+  >
     <div className="content">
-      <h1 className="title">Money</h1>
+      <h1 className="title">{{ bannerMovie ? bannerMovie.title : "" }}</h1>
       <div className="banner_buttons">
         <button className="button">Play</button>
         <button className="button">My list</button>
       </div>
       <h1 className="description">
-        In publishing and graphic design, Lorem ipsum is a placeholder text
-        commonly used to demonstrate the visual form of a document or a typeface
-        without relying on meaningful content
+        {{ bannerMovie.overview }}
       </h1>
     </div>
     <div className="fade_bottom"></div>
@@ -17,14 +18,35 @@
 </template>
 
 <script>
+import axios from "../../shared/axios";
+import constant from "../../constants/constants";
 export default {
-     name:"netflix-banner"
+  name: "netflix-banner",
+  data() {
+    return {
+      bannerMovie: "",
+      backgroundImage: "",
+    };
+  },
+  mounted() {
+    this.getBannerMovie();
+  },
+  methods: {
+    getBannerMovie() {
+      axios
+        .get(`/trending/all/week?api_key=${constant.API_KEY}&language=en-US`)
+        .then((response) => {
+          this.bannerMovie = response.data.results[0];
+          this.backgroundImage =
+            constant.IMAGE_URl + this.bannerMovie.backdrop_path;
+        });
+    },
+  },
 };
 </script>
 
 <style scoped>
 .banner {
-  background-image: url("https://wallpaperaccess.com/full/2703652.png");
   background-size: cover;
   height: 448px;
   color: white;
