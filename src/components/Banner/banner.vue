@@ -1,19 +1,19 @@
 <template>
   <div
-    className="banner"
+    class="banner"
     :style="{ backgroundImage: 'url(' + backgroundImage + ')' }"
   >
-    <div className="content">
-      <h1 className="title">{{ bannerMovie ? bannerMovie.title : "" }}</h1>
-      <div className="banner_buttons">
-        <button className="button">Play</button>
-        <button className="button">My list</button>
+    <div class="content">
+      <h1 class="title">{{ bannerMovie ? bannerMovie.title : "" }}</h1>
+      <div class="banner_buttons">
+        <button class="button">Play</button>
+        <button class="button">My list</button>
       </div>
-      <h1 className="description">
+      <h1 class="description">
         {{ bannerMovie.overview }}
       </h1>
     </div>
-    <div className="fade_bottom"></div>
+    <div class="fade_bottom"></div>
   </div>
 </template>
 
