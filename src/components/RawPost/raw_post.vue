@@ -1,11 +1,11 @@
 <template>
-  <div className="row">
-    <h2>Netflix Originals</h2>
-    <div className="posters">
+  <div class="row">
+    <h2>{{this.data.title ? this.data.title : ''}}</h2>
+    <div class="posters">
       <img
         v-for="poster in posters"
         :key="poster.id"
-        className="poster"
+        :class="this.data.isSmall ? 'smallPoster' : 'poster' "
         alt="poster"
         :src="poster ? this.image_url + poster.backdrop_path : ''"
       />
@@ -17,11 +17,14 @@
 import axios from "../../shared/axios";
 import constant from "../../constants/constants";
 export default {
-     name:"netflix-raw_post",
-     data() {
+  name: "netflix-raw_post",
+  props: {
+    data: Object,
+  },
+  data() {
     return {
       posters: "",
-      image_url: constant.IMAGE_URl
+      image_url: constant.IMAGE_URl,
     };
   },
   mounted() {
@@ -30,15 +33,16 @@ export default {
   methods: {
     getPosterMovie() {
       axios
-        .get(`/discover/movie?api_key=${constant.API_KEY}&with_genres=28`)
+        .get(this.data.url)
         .then((response) => {
           this.posters = response.data.results;
           console.log(this.posters);
-        }).catch(error=>{
+        })
+        .catch((error) => {
           console.log(error);
         });
     },
-  }
+  },
 };
 </script>
 
@@ -63,7 +67,8 @@ export default {
   max-height: 250px;
   margin-right: 10px;
 }
-.smallPoster{
+.smallPoster {
   max-height: 100px;
+  margin-right: 10px;
 }
 </style>

@@ -1,14 +1,30 @@
 <template>
   <Navbar />
   <Banner />
-  <RawPost/>
+  <RawPost :data="originalMovieData" />
+  <RawPost :data="actionMovieData" />
 </template>
 <script>
 import Banner from "./components/Banner/banner.vue";
 import Navbar from "./components/Navbar/navbar.vue";
-import RawPost from './components/RawPost/raw_post.vue';
+import RawPost from "./components/RawPost/raw_post.vue";
+import URL from "./constants/urls";
 export default {
   components: { Navbar, Banner, RawPost },
+  data() {
+    return {
+      originalMovieData: {
+        url: URL.originals,
+        title: "Netflix Originals",
+        isSmall:false
+      },
+      actionMovieData: {
+        url: URL.action,
+        title: "Action",
+        isSmall:true
+      },
+    };
+  },
 };
 </script>
 <style>
