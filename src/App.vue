@@ -1,12 +1,14 @@
 <template>
   <Navbar />
   <Banner />
+  <RawPost/>
 </template>
 <script>
 import Banner from "./components/Banner/banner.vue";
 import Navbar from "./components/Navbar/navbar.vue";
+import RawPost from './components/RawPost/raw_post.vue';
 export default {
-  components: { Navbar, Banner },
+  components: { Navbar, Banner, RawPost },
 };
 </script>
 <style>
