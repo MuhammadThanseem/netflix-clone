@@ -36,7 +36,6 @@ export default {
         .get(this.data.url)
         .then((response) => {
           this.posters = response.data.results;
-          console.log(this.posters);
         })
         .catch((error) => {
           console.log(error);
