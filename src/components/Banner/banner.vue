@@ -1,36 +1,48 @@
 <template>
-  <div
-    class="banner"
-    :style="{ backgroundImage: 'url(' + backgroundImage + ')' }"
-  >
-    <div class="content">
-      <h1 class="title">{{ bannerMovie ? bannerMovie.title : "" }}</h1>
-      <div class="banner_buttons">
-        <button class="button">
-          <font-awesome-icon icon="fa-solid fa-play" /> Play
-        </button>
-        <button class="button"><font-awesome-icon icon="fa-solid fa-list" /> My list</button>
+  <div>
+    <div
+      class="banner"
+      :style="{ backgroundImage: 'url(' + backgroundImage + ')' }"
+    >
+      <div class="content">
+        <h1 class="title">{{ bannerMovie ? bannerMovie.title : "" }}</h1>
+        <div class="banner_buttons">
+          <button class="button" @click="getVideoId(bannerMovie.id)">
+            <font-awesome-icon icon="fa-solid fa-play" /> Play
+          </button>
+          <button class="button">
+            <font-awesome-icon icon="fa-solid fa-list" /> My list
+          </button>
+        </div>
+        <h1 class="description">
+          {{ bannerMovie.overview }}
+        </h1>
       </div>
-      <h1 class="description">
-        {{ bannerMovie.overview }}
-      </h1>
+      <div class="fade_bottom"></div>
     </div>
-    <div class="fade_bottom"></div>
+    <YoutubeVue3 ref="youtube" :videoid="videoId.key" :width="width" v-if="videoId"/>
   </div>
 </template>
 
 <script>
 import axios from "../../shared/axios";
 import constant from "../../constants/constants";
+import { YoutubeVue3 } from "youtube-vue3";
 export default {
   name: "netflix-banner",
+  components: {
+    YoutubeVue3,
+  },
   data() {
     return {
       bannerMovie: "",
       backgroundImage: "",
+      videoId: "",
+      width: 0,
     };
   },
   mounted() {
+    this.width = screen.width;
     this.getBannerMovie();
   },
   methods: {
@@ -42,6 +54,21 @@ export default {
           this.backgroundImage =
             constant.IMAGE_URl + this.bannerMovie.backdrop_path;
         });
+    },
+    getVideoId(id) {
+      axios
+        .get(`/movie/${id}/videos?api_key=${constant.API_KEY}&language=en-US`)
+        .then((response) => {
+          if (response.data.results.length !== 0) {
+            this.videoId = response.data.results[0];
+          } else {
+            console.log("Empty Array");
+          }
+        });
+      this.playCurrentVideo();
+    },
+    playCurrentVideo() {
+      this.$refs.youtube.player.playVideo();
     },
   },
 };
