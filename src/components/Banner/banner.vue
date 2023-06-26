@@ -6,8 +6,10 @@
     <div class="content">
       <h1 class="title">{{ bannerMovie ? bannerMovie.title : "" }}</h1>
       <div class="banner_buttons">
-        <button class="button">Play</button>
-        <button class="button">My list</button>
+        <button class="button">
+          <font-awesome-icon icon="fa-solid fa-play" /> Play
+        </button>
+        <button class="button"><font-awesome-icon icon="fa-solid fa-list" /> My list</button>
       </div>
       <h1 class="description">
         {{ bannerMovie.overview }}
